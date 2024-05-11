@@ -38,10 +38,10 @@ Change the password, on the admin panel.
 
 Go to the 'Sending Profiles' and changes the parameter to match the postfix configuration.
 
-![Sending_profile]("/home/uncle/Documents/Obsidian Vault/Pasted image 20240510232638.png")
+![Sending_profile]("/home")
 
 Now send the test mail:
-![Chek]("/home/uncle/Documents/Obsidian Vault/Pasted image 20240510232702.png")
+![Chek]("/home")
 
 Now start configuring the campaign.
 
