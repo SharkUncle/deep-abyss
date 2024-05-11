@@ -38,10 +38,7 @@ Change the password, on the admin panel.
 
 Go to the 'Sending Profiles' and changes the parameter to match the postfix configuration.
 
-![Sending_profile]("/home")
-
-Now send the test mail:
-![Chek]("/home")
+Now send the test mail, and check on the Betterbird Inbox.
 
 Now start configuring the campaign.
 
