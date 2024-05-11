@@ -249,12 +249,7 @@ $ exec /bin/bash
 # Useful Ressources
 
 https://github.com/xsudoxx/OSCP
+
 https://github.com/0xsyr0/OSCP
 
 https://github.com/brianlam38/OSCP-2022/blob/main/cheatsheet-active-directory.md
-
-# Practice
-
-https://github.com/0x4D31/awesome-oscp#Active-Directory
-https://sgtdede.gitbook.io/hacking/oscp-2022/guide-fr#4-active-directory
-https://sgtdede.gitbook.io/hacking/oscp-2022/guide-fr#5-privilege-escalation
