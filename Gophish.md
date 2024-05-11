@@ -18,13 +18,17 @@ Install postfix locally:
 https://gist.github.com/raelgc/6031274
 
 Install thunderbird on the kali distro.
+
 *kali doesn't have the firefox repository activate*
+
 https://support.mozilla.org/en-US/kb/installing-thunderbird-linux#w_installing-from-your-distribution-package-manager
 https://www.thunderbird.net/en-US/thunderbird/all/
 
 Thunderbird is well bugged, Betterbird seam promising.
+
 *The installation process is not simple on debian based distro*
 https://www.betterbird.eu/
+
 ### Postfix:
 
 Local email server.
