@@ -12,7 +12,7 @@ https://www.kali.org/docs/containers/installing-docker-on-kali/
 Docker hub image for gophish:
 https://hub.docker.com/r/gophish/gophish
 
-Start the containor with the following command:
+Start the container with the following command:
 `docker run -it --rm --network host <container image ID>`
 
 Why docker, because it is much more flexible and easy to use. I force myself to use it every time I can, so fell free to follow it or use another way.
