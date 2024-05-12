@@ -274,6 +274,8 @@ $ exec /bin/bash
 
 # Useful Ressources
 
+https://crackstation.net/
+
 https://github.com/xsudoxx/OSCP
 
 https://github.com/0xsyr0/OSCP
