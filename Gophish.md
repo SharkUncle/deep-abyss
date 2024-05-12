@@ -1,5 +1,9 @@
 # Gophish Local Test
 
+This a steps by steps guide for testing Gophish in a local environment.
+
+**For study only!**
+
 ## Requirements:
 
 First install docker on a Kali linux distro.
@@ -85,11 +89,40 @@ Go to the dashboard on Gophish, select the campaign in progress and retreive all
 First create a self signed certificate with openssl:
 `sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout gophish.key -out gophish.crt`
 
+*Take care of the right on the files created and the user in the docker container.*
+
 The cert and key file need to be moved in the Gophish directory with the config.json.
 
 Modify the config.json in order to create an HTTPS campaign.
 
 The template is on the Gophish git: https://github.com/gophish/gophish/blob/master/config.json
+
+The phish_server need to be modify as following:
+```
+	"phish_server": {
+		"listen_url": "0.0.0.0:443",
+		"use_tls": true,
+		"cert_path": "gophish.crt",
+		"key_path": "gophish.key"
+	},
+```
+
+I'm using the Docker version of Gophish, so I need to specify the config.json when I run docker.
+Change command use before to: `docker run -it --rm -v ~/Gophish/config.json:/opt/gophish/config.json --network host gophish/gophish`
+
+Then use docker cp to copy the self signed certificate in the gophish directory:
+```
+docker cp gophish.crt <gophish_container>:/opt/gophish
+docker cp gophish.key <gophish_container>:/opt/gophish
+
+docker exec -it <gophish_cantainer> sh # Use this to verify the files and permissions
+```
+
+Now everything is in place to get back on the Gophish panel and configure the new campaign using the certificate.
+Specify the URL before launching it to: `https://127.0.0.1`
+
+Go further:
+https://www.n00py.io/2017/09/phishing-with-gophish-and-letsencrypt/
 
 ##### Troubleshoot
 
