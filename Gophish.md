@@ -38,6 +38,8 @@ Go to the 'Sending Profiles' and changes the parameter to match the postfix conf
 
 Now start configuring the campaign.
 
+**Reminder: the more realistic the campaign, the better the results will be.**
+
 ### Landing page
 
 This is the web page view by the user once he click on the malicious link. It is write in HTML.
