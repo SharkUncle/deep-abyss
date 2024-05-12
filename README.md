@@ -5,4 +5,4 @@ My notes on the infosec journey.
 ## The content:
 
 - Gophish test on localhost: install and test a local phishing campaign.
-- Cheat sheet for CTF.
+- Just another Cheat sheet for CTF.

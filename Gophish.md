@@ -1,6 +1,7 @@
 # Gophish Local Test
 
 ## Requirements:
+
 First install docker on a Kali linux distro.
 https://www.kali.org/docs/containers/installing-docker-on-kali/
 
@@ -35,7 +36,7 @@ Go to the 'Sending Profiles' and changes the parameter to match the postfix conf
 
 Now start configuring the campaign.
 
-#### Landing page
+### Landing page
 
 This is the web page view by the user once he click on the malicious link. It is write in HTML.
 
