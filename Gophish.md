@@ -124,5 +124,5 @@ https://www.n00py.io/2017/09/phishing-with-gophish-and-letsencrypt/
 
 ##### Troubleshoot
 
-Add apt-apt-repository, with apt.
+Add apt-repository, with apt.
 - Correct the python error: https://askubuntu.com/questions/1480616/adding-opencpn-repository-attributeerror-nonetype-object-has-no-attribute
