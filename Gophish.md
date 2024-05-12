@@ -9,8 +9,6 @@ This a steps by steps guide for testing Gophish in a local environment.
 First install docker on a Kali linux distro.
 https://www.kali.org/docs/containers/installing-docker-on-kali/
 
-The second part for docker-ce is used.
-
 Docker hub image for gophish:
 https://hub.docker.com/r/gophish/gophish
 
