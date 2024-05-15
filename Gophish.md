@@ -32,7 +32,9 @@ Download the tar archive and extract it. cd on the betterbird directory and star
 
 The environment is now configure, let's start a fake campaign on Gophish.
 
-Change the password, on the admin panel.
+Browse the Gophish web interface at the address specify in the log: https://0.0.0.0:3333 is the default.
+
+Change the password, on the admin panel. The password is generate automatically in the log when the container is run.
 
 Go to the 'Sending Profiles' and changes the parameter to match the postfix configuration.
 
