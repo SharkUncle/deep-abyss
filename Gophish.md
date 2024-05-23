@@ -123,8 +123,17 @@ docker exec -it <gophish_cantainer> sh # Use this to verify the files and permis
 Now everything is in place to get back on the Gophish panel and configure the new campaign using the certificate.
 Specify the URL before launching it to: `https://127.0.0.1`
 
-Go further:
+**Go further:**
+
+Try to use Let's encrypt certificate:
+
 https://www.n00py.io/2017/09/phishing-with-gophish-and-letsencrypt/
+
+Use Gmail in the **Sending Profile**:
+
+https://hailbytes.com/how-to-setup-gmail-smtp-on-gophish/
+
+*Worked in May 2024*
 
 ##### Troubleshoot
 
