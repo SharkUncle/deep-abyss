@@ -38,16 +38,18 @@ def portScan(targetHost, targetPorts):
     except:
         print('\n[+] Scan results for: ' + targetIP)
     setdefaulttimeout(1)
-# This part don't work well with multiple ports
     for targetPort in targetPorts:
         t = Thread(target=conScan, args=(targetHost, int(targetPort)))
         t.start()
 
 # Main parts of the code for the user
 def main():
-    parser = optparse.OptionParser("usage%prog "+"-H <target host> -p <target port>")
+    parser = optparse.OptionParser(        
+        usage = "usage: %prog [options] -H <target host> -p <target port>",
+        epilog = "example: %prog -H 192.168.1.1 -p 21,22,80")
     parser.add_option('-H', dest='targetHost', type='string', help='Specify target host')
     parser.add_option('-p', dest='targetPort', type='string', help='Specify target port(s) seperated by comma')
+    parser
     (options, args) = parser.parse_args()
     targetHost = options.targetHost
     targetPorts = str(options.targetPort).split(',')
