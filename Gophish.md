@@ -83,6 +83,7 @@ After enabling this, it is possible to use any email address ending with: "@loca
 Thunderbird doesn't support Movemail, Betterbird is well better for this test.
 
 https://www.betterbird.eu/
+
 https://www.betterbird.eu/downloads/index.php
 
 Download the tar archive and extract it: `tar -xvf betterbird-<VERSION>.en-US.linux-x86_64.tar.bz2`
