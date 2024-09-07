@@ -23,3 +23,12 @@ https://cht.sh/
 Useful for CTF, quick search a command for a specific tool and customise the option.
 
 https://github.com/Orange-Cyberdefense/arsenal
+
+## Exegol
+
+A very useful and powerful setup.
+
+The official documentation is very simple to follow for the installation process.
+
+https://github.com/ThePorgs/Exegol
+https://exegol.readthedocs.io/en/latest/
