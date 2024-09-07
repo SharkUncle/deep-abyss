@@ -1,5 +1,7 @@
 # CISO Assistant
 
+**IN PROGRESS**
+
 Notes for testing CISO Assistant locally.
 
 Link to the repository on Github: https://github.com/intuitem/ciso-assistant-community
