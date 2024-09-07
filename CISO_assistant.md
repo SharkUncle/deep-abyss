@@ -1,6 +1,6 @@
 # CISO Assistant
 
-**/!\ IN PROGRESS /!\**
+**IN PROGRESS**
 
 Notes for testing CISO Assistant locally.
 
