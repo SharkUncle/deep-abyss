@@ -1,5 +1,11 @@
 # Useful resources for everything:
 
+## Arsenal
+
+Useful for CTF, quick search a command for a specific tool and customise the option.
+
+https://github.com/Orange-Cyberdefense/arsenal
+
 ## Cheat.sh
 
 Use it to quickly search answer without browsing many online forum.
@@ -17,12 +23,6 @@ cht.sh --shell <lang>
 https://github.com/chubin/cheat.sh
 
 https://cht.sh/
-
-## Arsenal
-
-Useful for CTF, quick search a command for a specific tool and customise the option.
-
-https://github.com/Orange-Cyberdefense/arsenal
 
 ## Exegol
 
