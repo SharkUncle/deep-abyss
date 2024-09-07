@@ -33,3 +33,11 @@ The official documentation is very simple to follow for the installation process
 https://github.com/ThePorgs/Exegol
 
 https://exegol.readthedocs.io/en/latest/
+
+## gitlab-ci-local
+
+A friend of mine show me this incredible tool.
+
+If you work on a Gitlab CI/CD pipeline and you need to test a specific step, you can install this tool. It can run on your system a Gitlab pipeline more light and more quick. It save a lot of time. And it is easy to use.
+
+https://github.com/firecow/gitlab-ci-local?tab=readme-ov-file#installation
