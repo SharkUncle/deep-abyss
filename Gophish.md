@@ -132,7 +132,7 @@ Send an email to `<your-user>@localhost` address.
 
 Click on "Get email" and check if you get the email in your "Inbox".
 
-## Gophish
+## Campaign configuration on Gophish
 
 First get the Docker from the Hub: `docker pull gophish/gophish:latest`
 
