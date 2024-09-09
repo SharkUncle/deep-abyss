@@ -4,6 +4,11 @@ This a step by step guide for testing Gophish in a local environment.
 
 **For study only!**
 
+Gophish is an open-source phishing toolkit. It is used by penetration testers and business.
+https://github.com/gophish/gophish
+
+With this tool the phishing campaign is easy to build, and monitoring the results is very simple. The dashboard is understandable, you can check the users who have clicked on your link and the ones who have provided their password.
+
 ## Requirements:
 
 First install docker on a Kali linux distro.
