@@ -1,6 +1,6 @@
 # Gophish Local Test
 
-This a steps by steps guide for testing Gophish in a local environment.
+This a step by step guide for testing Gophish in a local environment.
 
 **For study only!**
 
