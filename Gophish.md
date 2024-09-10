@@ -30,7 +30,7 @@ Why docker, because it is much more flexible and easy to use. I force myself to 
 
 There is a few step to follow before using Gophish locally. The first one is installed and configured properly an SMTP Email server on Linux.
 
-#### Modify the /etc/hosts file and add :
+#### Modify the /etc/hosts file:
 
 ```
 127.0.0.1       localhost
