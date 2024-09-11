@@ -28,9 +28,14 @@ For the installation you can follow the official documentation:
 - After it, you can browse the web page: https://localhost:8443/
 - After the first connection, you need to change your password, choose one you can remember or use a manager (whatever you want).
 
+### Start CISO Assistant after you shut down your computer
+
+You start again all the container with the following command, in the directory where the repo is clone:
+`docker compose up -d`
+
 ## How to use CISO Assistant
 
-The Official documentation is well written, and the tool is pretty straightforward. So nothing complicate. If you already used a risk assessment tool, you won't be lost.
+The Official documentation is well written for the first steps, and the tool is pretty straightforward. So nothing complicate. If you already used a risk assessment tool, you won't be lost.
 
 First you need to create a domain:
 - Navigate with the left panel to 'ORGANIZATION' > 'Domains'
