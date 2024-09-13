@@ -4,6 +4,8 @@
 
 Notes for testing CISO Assistant locally.
 
+CISO Assistant is an open-source tool for GRC. It can be used for risk management and like the suggested it to help the CISO. Yes nobody's perfect, if it is possible to make GRC less painful it worth the try.
+
 Link to the repository on Github: https://github.com/intuitem/ciso-assistant-community
 
 ## Installation
