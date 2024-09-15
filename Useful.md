@@ -46,6 +46,6 @@ https://github.com/firecow/gitlab-ci-local?tab=readme-ov-file#installation
 
 ## osint4all
 
-A great resource for OSINT. With a lot of link.
+A great resource for OSINT. With a lot of links.
 
 https://start.me/p/L1rEYQ/osint4all
