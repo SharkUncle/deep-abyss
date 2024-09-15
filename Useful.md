@@ -1,5 +1,7 @@
 # Useful resources for everything:
 
+This is a list of resources that can the life easier.
+
 ## Arsenal
 
 Useful for CTF, quick search a command for a specific tool and customise the option.
