@@ -90,3 +90,10 @@ The documentation show a list of arguments separate in two part:
 The very basic use of this tool it to start a scan against a project you have. It will scan all the file and the archive to find vulnerabilities on the dependencies of your code.
 
 The format of the output can be choose between different type of file.
+
+The Basic command is this one:
+
+`./bin/dependency-check.sh --enableExperimental --project "<your project>" --scan /path/to/scan`
+
+This argument is very useful it permit to scan a lot more files. But it generate a lot of false positive and false negative. Activate this argument only if it you need to scan a file not cover by the base configuration.
+
