@@ -49,3 +49,14 @@ https://github.com/firecow/gitlab-ci-local?tab=readme-ov-file#installation
 A great resource for OSINT. With a lot of links.
 
 https://start.me/p/L1rEYQ/osint4all
+
+## Proton
+
+Proton is great for the email and the VPN.
+
+You can subscribe for free and use a secure mailbox and a VPN. I'm not sponsored by the enterprise so you don't have to follow my advice. It's entirely personal.
+
+https://proton.me/mail
+https://protonvpn.com/
+
+You can configure OpenVPN for Proton VPN in Linux, this is easy and the result save time.
