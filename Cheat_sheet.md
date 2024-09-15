@@ -281,3 +281,7 @@ https://github.com/xsudoxx/OSCP
 https://github.com/0xsyr0/OSCP
 
 https://github.com/brianlam38/OSCP-2022/blob/main/cheatsheet-active-directory.md
+
+https://lolbas-project.github.io/
+
+https://wadcoms.github.io/
