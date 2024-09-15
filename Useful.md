@@ -1,6 +1,6 @@
 # Useful resources for everything:
 
-This is a list of resources that can the life easier.
+This is a list of resources that can make the life easier.
 
 ## Arsenal
 
