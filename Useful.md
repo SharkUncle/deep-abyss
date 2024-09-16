@@ -10,7 +10,7 @@ https://github.com/Orange-Cyberdefense/arsenal
 
 ## Awesome GPT Agents
 
-The repo contain awesome agents for Cybersecurity.
+The repo contain awesome agents for Cybersecurity for ChatGPT.
 
 The list contains a lot of resources, all the topics are included. From the malware analysis to the legal, you will find what you need.
 
