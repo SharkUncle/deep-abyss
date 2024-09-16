@@ -8,6 +8,16 @@ Useful for CTF, quick search a command for a specific tool and customise the opt
 
 https://github.com/Orange-Cyberdefense/arsenal
 
+## Awesome GPT Agents
+
+The repo contain awesome agents for Cybersecurity.
+
+The list contains a lot of resources, all the topics are included. From the malware analysis to the legal, you will find what you need.
+
+**Only for the Plus subscription**
+
+https://github.com/fr0gger/Awesome-GPT-Agents
+
 ## Cheat.sh
 
 Use it to quickly search answer without browsing many online forum.
