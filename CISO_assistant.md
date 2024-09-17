@@ -58,7 +58,7 @@ This is the two first basic step to create an environment.
 For my test I go to "Extra" > "Libraries", and I'm surprised by the number of the resources available. Yes I know, I don't need much to be amazed. **BUT**, this is it. When you have to prepare for your customer the legal framework or controls, you always have to go online and search on "Google" or ask "ChatGPT" to :
 - What are the controls applicable?
 - What is the regulation for this business sector?
-- how can I retrieve all the controls the MIST have published?
+- How can I retrieve all the controls the MIST have published?
 
 Well, this section save a lot of time and some headache.
 
