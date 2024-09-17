@@ -93,7 +93,7 @@ The format of the output can be choose between different type of file.
 
 The Basic command is this one:
 
-`./bin/dependency-check.sh --enableExperimental --project "<your project>" --scan /path/to/scan`
+`./bin/dependency-check.sh --enableExperimental --project "<your project>" --scan /path/to/scan -f "ALL"`
 
 This argument is very useful it permit to scan a lot more files. But it generate a lot of false positive and false negative. Activate this argument only if it you need to scan a file not cover by the base configuration.
 
