@@ -7,6 +7,13 @@ OWASP Dependency Check (ODC) is tool provide by the OWASP foundation help identi
 https://github.com/jeremylong/DependencyCheck
 
 This test cover the basic use cases for this tool. I'm not an expert in DevOps and in Cybersecurity, you can check online for a better guide if this one is not sufficient.
+
+This tool is used for Software Component Analysis (SCA), it can be included in a pipeline CI/CD. In Github action, Gitlab CI or Jenkins. I will not cover all of this parts, so feel free to make your own research.
+
+BTW the tool generate complete and detailed reports. ODC is have a lot of options, you can check the official documentation to have a look:
+
+https://jeremylong.github.io/DependencyCheck/
+
 ## Installation
 
 The installation of the tool is pretty simple.
