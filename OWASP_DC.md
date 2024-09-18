@@ -91,7 +91,7 @@ The very basic use of this tool it to start a scan against a project you have. I
 
 The format of the output can be choose between different type of file.
 
-The Basic command is this one:
+The basic command is this one:
 
 `./bin/dependency-check.sh --enableExperimental --project "<your project>" --scan /path/to/scan -f "ALL"`
 
