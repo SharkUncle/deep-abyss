@@ -108,7 +108,7 @@ The basic command is this one:
 
 When the scan is finished, check your directory with `ls` or whatever command you use.
 
-You will see a lot of report in different format. This is the results of your scan.
+You will see a lot of reports in different format. This is the results of your scan.
 
 The most visual is the html, bit personally I prefer the json it is much more useful when you need to script the outputs.
 
