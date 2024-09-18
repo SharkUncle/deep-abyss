@@ -36,6 +36,20 @@ https://github.com/chubin/cheat.sh
 
 https://cht.sh/
 
+## DevSecOps Guides
+
+A good resources for the DevSecOps field.
+
+The guide is about good practices to integrating security into the software development life cycle.
+
+https://devsecopsguides.com
+
+The contents are good and detailed, all the parts are covered.
+
+And they have a GPT, which is pretty good.
+
+
+
 ## Exegol
 
 A very useful and powerful setup.
