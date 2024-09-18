@@ -48,7 +48,7 @@ The contents are good and detailed, all the parts are covered.
 
 And they have a GPT, which is pretty good.
 
-
+https://chatgpt.com/g/g-SAOYn4UCp-devsecops-guides
 
 ## Exegol
 
