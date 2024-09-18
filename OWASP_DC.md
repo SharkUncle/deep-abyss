@@ -95,5 +95,12 @@ The Basic command is this one:
 
 `./bin/dependency-check.sh --enableExperimental --project "<your project>" --scan /path/to/scan -f "ALL"`
 
-This argument is very useful it permit to scan a lot more files. But it generate a lot of false positive and false negative. Activate this argument only if it you need to scan a file not cover by the base configuration.
+`--enableExperimental`: This argument is very useful it permit to scan a lot more files. But it generate a lot of false positives and false negatives. Activate this argument only if you need to scan a file not cover by the base configuration.
 
+When the scan is finished, check your directory with `ls` or whatever command you use.
+
+You will see a lot of report in different format. This is the results of your scan.
+
+The most visual is the html, bit personally I prefer the json it is much more useful when you need to script the outputs.
+
+I will not cover all the command here, just specific use case I think useful. Feel free to explore the tool, it's much more complex than it looks.
