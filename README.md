@@ -9,6 +9,7 @@ My notes on the infosec journey.
 - [Useful](https://github.com/SharkUncle/deep-abyss/blob/master/Useful.md): save it and (never) use it.
 - [CISO_Assistant](https://github.com/SharkUncle/deep-abyss/blob/master/CISO_assistant.md): this is a software use for risk management
 - [OWASP Dependency Check](https://github.com/SharkUncle/deep-abyss/blob/master/OWASP_DC.md): OWASP Dependency Check tool help to identify Vulnerability dependencies.
+- OpenCVE: is an open-source platform designed to manage vulnerabilities (CVEs)
 
 ### Scripts directory:
 
