@@ -72,7 +72,7 @@ https://github.com/firecow/gitlab-ci-local?tab=readme-ov-file#installation
 
 The Free Online Course and probably the best for learning Metasploit Framework alias MSF.
 
-It present all the content of Metasploit, this framework owned by Rapid7.
+It present all the content of Metasploit, this framework is owned by Rapid7.
 
 Metasploit is a great resource, it help with security audits, penetration tests, enumeration, offensive and defensive, and many things.
 
