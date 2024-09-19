@@ -68,6 +68,16 @@ If you work on a Gitlab CI/CD pipeline and you need to test a specific step, you
 
 https://github.com/firecow/gitlab-ci-local?tab=readme-ov-file#installation
 
+## Metasploit Unleashed
+
+The Free Online Course and probably the best for learning Metasploit Framework alias MSF.
+
+It present all the content of Metasploit, this framework owned by Rapid7.
+
+Metasploit is a great resource, it help with security audits, penetration tests, enumeration, offensive and defensive, and many things.
+
+https://www.offsec.com/metasploit-unleashed/
+
 ## osint4all
 
 A great resource for OSINT. With a lot of links.
