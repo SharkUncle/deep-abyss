@@ -36,7 +36,7 @@ On the same directory where you place the .zip archive and the .zip.asc file, us
 
 `gpg --verify dependency-check-10.0.4-release.zip.asc`
 
-When it is done and all the step correctly perform, the output of the command shall return: "gpg: Good signature from "Jeremy Long <jeremy.long@gmail.com>"
+When it is done and all the step correctly perform, the output of the command shall return: "gpg: Good signature from "Jeremy Long <jeremy.long@gmail.com>""
 
 It is a good practice to always check the integrity of the software you download online. You never know maybe one day it will save your life.
 
