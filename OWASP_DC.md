@@ -43,9 +43,9 @@ It is a good practice to always check the integrity of the software you download
 
 Now unzip the archive: `unzip dependency-check-10.0.4-release.zip`
 
-Now just: `cd dependency-check`
+Go to the dependency-check directory: `cd dependency-check`
 
-For finish the installation check if all is good:
+To finish the installation, check if all is good:
 ```
 cd bin/
 ./dependency-check.sh --help
@@ -70,7 +70,7 @@ But there is something mandatory before continuing? OWASP Dependency Check need 
 For updating it you will need an API key to the NVD data-feed. You can obtain a key directly on the NVD web site:
 https://nvd.nist.gov/developers/request-an-api-key
 
-You need to give some information, don't worry it just demand:
+You need to give some informations, don't worry it just asking:
 - Organization Name
 - Email Address
 - Organization Type
