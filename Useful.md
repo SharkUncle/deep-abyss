@@ -68,6 +68,7 @@ If you work on a Gitlab CI/CD pipeline and you need to test a specific step, you
 
 https://github.com/firecow/gitlab-ci-local?tab=readme-ov-file#installation
 
+
 ## Metasploit Unleashed
 
 The Free Online Course and probably the best for learning Metasploit Framework alias MSF.
@@ -83,6 +84,20 @@ https://www.offsec.com/metasploit-unleashed/
 A great resource for OSINT. With a lot of links.
 
 https://start.me/p/L1rEYQ/osint4all
+
+## OWASP Juice Shop
+
+A well known insecure web application. This is an awesome resource to learn web vulnerabilities.
+
+Just it is describe on the OWASP web page: "It can be used in security trainings, awareness demos, CTFs and as a guinea pig for security tools!"
+
+Give it a try and some time, because there is a lot of things to do on this one.
+
+https://owasp.org/www-project-juice-shop/
+
+https://juice-shop.herokuapp.com/#/
+
+https://github.com/juice-shop/juice-shop
 
 ## Proton
 
