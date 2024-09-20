@@ -1,4 +1,4 @@
-8# OpenCVE - Opensource Vulnerability Management Platform
+# OpenCVE - Opensource Vulnerability Management Platform
 
 OpenCVE is an open-source platform designed to help organizations and cybersecurity professionals monitor, track, and manage vulnerabilities (CVEs) from the global CVE database in real time.
 
@@ -92,6 +92,8 @@ else:
 ```
 
 So, like always the code from the know LLM need to be check first. I leave it here for another of my own project, I will test it later. Without promises.
+
+Of course it work with bash, and even with Powershell if you are not lucky.
 
 https://docs.opencve.io/v1/api/
 
