@@ -14,7 +14,7 @@ BTW the tool generate complete and detailed reports. ODC is have a lot of option
 
 https://jeremylong.github.io/DependencyCheck/
 
-DevSecOps is interesting in the security field, there's a lot of resources available.
+DevSecOps is interesting in the security field, there's a lot of resources available out there.
 
 ## Installation
 
