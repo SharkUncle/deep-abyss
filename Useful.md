@@ -110,3 +110,7 @@ https://proton.me/mail
 https://protonvpn.com
 
 You can configure OpenVPN for Proton VPN in Linux, this is easy and the result save time.
+
+https://protonvpn.com/support/linux-openvpn/
+
+https://protonvpn.com/support/openvpn-windows-setup/
