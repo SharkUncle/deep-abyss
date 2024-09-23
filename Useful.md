@@ -68,6 +68,13 @@ If you work on a Gitlab CI/CD pipeline and you need to test a specific step, you
 
 https://github.com/firecow/gitlab-ci-local?tab=readme-ov-file#installation
 
+## HTML Preview
+
+GitHub & BitBucket HTML Preview is a great resource, it permit to use html code and to render the file. Plus you don't need to clone or download it to use it.
+
+Just add: `https://htmlpreview.github.io/?` to any URL of HTML file.
+
+https://github.com/htmlpreview/htmlpreview.github.com?tab=readme-ov-file
 
 ## Metasploit Unleashed
 
