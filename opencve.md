@@ -66,6 +66,20 @@ When you return to your project, it is automatically populated with CVEs.
 
 You can also see the "Weakness" on the left pane, there are a lot of CWE available to be read.
 
+You can manage the subscriptions in the tab of the same name.
+
+Lastly but not the less important, in your project got to "Notification".
+
+Now add:
+- Name: whatever you want
+- email: a valid email
+
+Configure the Alert settings you want (keep in mind if the severity is too low or to large there a risk of flooding).
+
+Now the notifications are activate.
+
+The free account limit the notification to only one email address.
+
 ## OpenCVE API
 
 The most interesting part of this kind of resource is the Rest API. With that you can use it and integrate it to you own project.
