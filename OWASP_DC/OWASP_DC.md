@@ -114,3 +114,7 @@ You will see a lot of reports in different format. This is the results of your s
 The most visual is the html, bit personally I prefer the json it is much more useful when you need to script the outputs.
 
 I will not cover all the command here, just specific use case I think useful. Feel free to explore the tool, it's much more complex than it looks.
+
+I put the report in HTML format, just check the result and see by yourself.
+
+[Basic report](https://htmlpreview.github.io/?https://github.com/SharkUncle/deep-abyss/blob/master/OWASP_DC/basic-dependency-check-report.html)
