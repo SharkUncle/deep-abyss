@@ -118,3 +118,48 @@ I will not cover all the command here, just specific use case I think useful. Fe
 I put the report in HTML format, just check the result and see by yourself.
 
 [Basic report](https://htmlpreview.github.io/?https://github.com/SharkUncle/deep-abyss/blob/master/OWASP_DC/basic-dependency-check-report.html)
+
+The report is the results of the scan of the DVJA directory, I'll go into more detail in the next section.
+
+## Scan more files than just the basic
+
+Sometimes the basic command will not scan all the files to find all the dependencies.
+
+### pom.xml
+
+For this type of file maven need to be configured.
+
+https://maven.apache.org/
+
+**Maven** is a build automation tool used primarily for Java projects, not necessarily just Java but also C#, Ruby, etc.
+
+It is very useful when you need to build a project and to check the dependencies. That's why we're here.
+
+Maven installation is easy, use the package manager (for Linux user with apt, Google is your friend for this): `sudo apt install -y maven`
+
+Now, it is time to use maven to run OWASP Dependency Check on a Java project.
+
+I choose the [Damn Java Vulnerable Application](https://github.com/appsecco/dvja) for this test.
+
+Clone the Git repository to your system: `git clone https://github.com/appsecco/dvja`
+
+Now go to the dvja/ directory and next use maven to check DVJA project for dependencies vulnerability:
+```
+cd dvja/
+sudo mvn org.owasp:dependency-check-maven:check -Dformat=HTML -DoutputDirectory=./rapports
+```
+
+The scan take 2 at 3 minutes, on my computer of course. Go take a coffee and check the awesome reports after that.
+
+At the end of the scan, check the target/ directory for the report in the HTML format.
+
+I choose the HTML format for this example, but you can choose another format.
+
+I put my [reports](https://htmlpreview.github.io/?https://github.com/SharkUncle/deep-abyss/blob/master/OWASP_DC/detailed-dependency-check-report.html), you can see by yourself the results and compare it. Or just check this one if you don't have time.
+
+Now the report is not good at all, it contain 26 vulnerable dependencies and 185 vulnerabilities. The jobs end here for this tool, but the Consultant need to filter the false positives before preparing the final report.
+
+You can see the Log4j vulnerability contain in the DVJA repository.
+
+The good part using ODC like that is you don't need to update the NVD database. But it can be used in all environment. Sometimes you are in an offline environment and it can be a headache.
+
