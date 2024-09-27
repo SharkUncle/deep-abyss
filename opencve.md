@@ -29,7 +29,7 @@ The free content:
 
 ## Create a free account
 
-You can create a free account on the main web page. When you click on "GET STARTED" on the upper right of the page, you have a form. Fill in the information needed.
+You can create a free account for the SaaS version on the main web page. When you click on "GET STARTED" on the upper right of the page, you have a form. Fill in the information needed.
 
 Next, validate your email address and that's it, the sign up process is finished.
 
