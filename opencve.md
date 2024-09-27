@@ -113,6 +113,8 @@ Of course it work with bash, and even with Powershell if you are not lucky.
 
 https://docs.opencve.io/v1/api/
 
+This part can be awesome when you use it on your local configuration. With other tool that find vulnerabilities, remediate to miss configuration, manage risks or just follow technical products.
+
 ### Keywords reminder
 
 | Acronym | Description                          |
