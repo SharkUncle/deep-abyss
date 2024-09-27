@@ -4,6 +4,8 @@ OpenCVE is an open-source platform designed to help organizations and cybersecur
 
 The interesting part is to received an email when a new CVE appeared on your project.
 
+OpenCVE is completely open source, it means you can clone the project and use it on your own infrastructure.
+
 They offer the opportunity to test the platform:
 
 https://app.opencve.io/cve/
@@ -125,4 +127,4 @@ https://docs.opencve.io/v1/api/
 https://www.opencve.io/
 https://docs.opencve.io/
 https://app.opencve.io/cve/
-https://github.com/opencve/opencve/tree/master
+https://github.com/opencve/opencve
