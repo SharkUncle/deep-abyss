@@ -121,3 +121,17 @@ You can configure OpenVPN for Proton VPN in Linux, this is easy and the result s
 https://protonvpn.com/support/linux-openvpn/
 
 https://protonvpn.com/support/openvpn-windows-setup/
+
+## Trace Labs OSINT VM
+
+This is a virtual machine available by the Trace Labs team. Their describe themself just like taht in the web site: "Trace Labs is a nonprofit organization whose mission is to accelerate the family reunification of missing persons while training members in the trade craft of open source intelligence (OSINT)".
+
+The goal is to help people and researcher with an up-to-date VM that include tools for OSINT.
+
+
+In order to test it, click on the "Download OVA" in the main web page. Once donwload, you just need to import the OVA file and start the machine.
+
+*The password is very simple osint:osint*, it is a good practice to change the default password. Feel free to do whatever you want I'm not your CISO.
+
+
+https://www.tracelabs.org/initiatives/osint-vm
