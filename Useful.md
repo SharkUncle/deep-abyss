@@ -146,9 +146,8 @@ Do a `sudo apt update` to check for updates on your kali linux distro. Just in c
 
 Run the install script: `./install-tool.sh` now grab a coffee or do the dishes.
 
-XXXX
+After that you have OSINT tools installed. I searched for some well known tool and they were install.
 
-
-
+When you start Firefox browser you have already a list of bookmarks for OSINT research inluded in you bookmarks toolbar.
 
 https://www.tracelabs.org/initiatives/osint-vm
