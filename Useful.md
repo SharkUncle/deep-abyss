@@ -124,14 +124,31 @@ https://protonvpn.com/support/openvpn-windows-setup/
 
 ## Trace Labs OSINT VM
 
+A friend of mmine speak to me about this resource and I want to test it and see what it can do.
+
 This is a virtual machine available by the Trace Labs team. Their describe themself just like taht in the web site: "Trace Labs is a nonprofit organization whose mission is to accelerate the family reunification of missing persons while training members in the trade craft of open source intelligence (OSINT)".
 
 The goal is to help people and researcher with an up-to-date VM that include tools for OSINT.
 
-
 In order to test it, click on the "Download OVA" in the main web page. Once donwload, you just need to import the OVA file and start the machine.
 
 *The password is very simple osint:osint*, it is a good practice to change the default password. Feel free to do whatever you want I'm not your CISO.
+
+Once you are connect with the super robust credential on your kali, you can see some resources on the desktop. I think this one can be a realy good link to give a try:
+
+https://github.com/tracelabs/tofm/blob/main/tofm.md
+
+At the frst connection the VM work well, the background is cool but there a little prbolem. There are zero tools installed on it. When you check the destop earlier, there is one interesting icon: 'install-tools.sh'.
+
+The file name is rather explicit, verify that it can be executed with `ll install-tool.sh`.
+
+Do a `sudo apt update` to check for updates on your kali linux distro. Just in case, because the distro doesn't have any tool so in therory zero update to do.
+
+Run the install script: `./install-tool.sh` now grab a coffee or do the dishes.
+
+XXXX
+
+
 
 
 https://www.tracelabs.org/initiatives/osint-vm
