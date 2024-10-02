@@ -25,8 +25,8 @@ https://jeremylong.github.io/DependencyCheck/dependency-check-cli/index.html
 This is well describe on the web page, so follow the instructions.
 
 Download on the GitHub page of the project the release:
-- [dependency-check-10.0.4-release.zip](https://github.com/jeremylong/DependencyCheck/releases/download/v10.0.4/dependency-check-10.0.4-release.zip)
-- [dependency-check-10.0.4-release.zip.asc](https://github.com/jeremylong/DependencyCheck/releases/download/v10.0.4/dependency-check-10.0.4-release.zip.asc)
+- [dependency-check-<version>-release.zip](https://github.com/jeremylong/DependencyCheck/releases)
+- [dependency-check-<version>-release.zip.asc](https://github.com/jeremylong/DependencyCheck/releases)
 
 Then import the GPG key used to sign all releases, with the command given:
 
