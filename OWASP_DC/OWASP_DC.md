@@ -163,3 +163,12 @@ You can see the Log4j vulnerability contain in the DVJA repository.
 
 The good part using ODC like that is you don't need to update the NVD database. But it can be used in all environment. Sometimes you are in an offline environment and it can be a headache.
 
+### CMake file case
+
+ODC can scan CMake file, but this scan is use with the *Experimental* argument:
+
+`--enableExperimental`
+
+File scan: `CMakeLists.txt, *.cmake`
+
+Check the command use for the basic case of ODC, this test can be customized if needed.
