@@ -119,6 +119,10 @@ On the same page you have a 'Remediation plan' button, the control applied in th
 
 The last menu on the left panel is the 'Risk acceptances', add with the button '+ Add risk acceptance' a risk. This part is very interesting, because all risk need a remediation measure. But someone need to validate the correct remediation, ideally the 'Approver' need to be someone different than the one implement it.
 
+In all the RA on the CISO Assistant, I didn't see any parts about third party analysis. The supply chain attack is more-and-more popular, software and hardware are used like an entry point or to provoke damage. In CISO Assistant it can be possible to create a risk scenario to study this specific case.
+
+Supply chain attack are at least one scenario in your risk assessments.
+
 It need to be noted that the RA can be export in PDF or CSV format on its page.
 
 ## Audits
