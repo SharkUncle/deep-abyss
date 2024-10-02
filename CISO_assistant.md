@@ -74,8 +74,12 @@ Just click on the icons to download the library and it's automatically add to yo
 
 ### Pros/cons
 
+This is my vision of the tool, don't take it for the absolute truth.
+
+I encourage you to test it, so you can have your own opinion.
 
 | Pros                                                   | Cons                                    |
 | ------------------------------------------------------ | --------------------------------------- |
 | There a lot of security guide in the libraries section | The official documentation is light     |
 | Easy to install                                        | It is easy to get lost in the interface |
+| Easy to follow the risks stored                        | It's not a risk assessments tool        |
