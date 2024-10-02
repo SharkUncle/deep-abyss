@@ -6,6 +6,8 @@ The interesting part is to received an email when a new CVE appeared on your pro
 
 OpenCVE is completely open source, it means you can clone the project and use it on your own infrastructure.
 
+**This notes are for the SaaS solution, I will test OpenCVE locally later**
+
 They offer the opportunity to test the platform:
 
 https://app.opencve.io/cve/
