@@ -7,7 +7,8 @@ Link to the repository on Github: https://github.com/intuitem/ciso-assistant-com
 
 My first idea of the tool was "Cool, another note manager!", well I've never been so happy to be wrong.
 
-It offer very interesting about 
+It offers some very interesting features for GRC consultants.
+
 ## Installation
 
 For the test on my local system, it is very simple. You need to install first docker on target system.
