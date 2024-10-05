@@ -124,7 +124,7 @@ https://protonvpn.com/support/openvpn-windows-setup/
 
 ## Trace Labs OSINT VM
 
-A friend of mmine speak to me about this resource and I want to test it and see what it can do.
+A friend of mine speak to me about this resource and I want to test it and see what it can do.
 
 This is a virtual machine available by the Trace Labs team. Their describe themself just like taht in the web site: "Trace Labs is a nonprofit organization whose mission is to accelerate the family reunification of missing persons while training members in the trade craft of open source intelligence (OSINT)".
 
