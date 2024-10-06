@@ -37,6 +37,8 @@ STRIDE goes for:
 
 This methodology for analyzing threats is particularly interesting when you want to study the risk of your suppliers. Supply chain attack and environment around system are much more complex, threat modeling can help to analyze the security of the subcontractors and to identify the dependencies.
 
+I choose this method for this case, feel free to test whatever method you want.
+
 *There's a lot of resources available online if you want to learn more about STRIDE-based approach*
 
 ## Installation
