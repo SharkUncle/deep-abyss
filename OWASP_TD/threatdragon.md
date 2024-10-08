@@ -109,6 +109,6 @@ It will save the model in a 'JSON' format.
 
 Next, to work on the project click on the name of the model. It will open the mode creation page. On the left panel it is 
 
-** IN PROGRESS**
+**IN PROGRESS**
 
 This resource help to create the diagram threat model: https://owasp.org/www-project-threat-dragon/docs-2/diagrams/
