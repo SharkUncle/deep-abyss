@@ -78,7 +78,7 @@ SERVER_API_PROTOCOL=http
 
 *This is the default file for the environment variable*
 
-There are a lot of possible use case for this tool, this is a awesome that you can adjust the tool to your need. Especially when the environment is restricted, and you have the dependencies manage locally (repository, Git, etc.).
+There are a lot of possible use case for this tool, this is an awesome that you can adjust the tool to your need. Especially when the environment is restricted, and you have the dependencies manage locally (repository, Git, etc.).
 
 The docker command to run Threat Dragon:
 `docker run -it --rm -p 8080:3000 -v $(pwd)/.env:/app/.env owasp/threat-dragon:stable`
@@ -99,7 +99,7 @@ The main page provide example, select between the different sample and see the t
 
 ## Threat model creation
 
-The more interesting use case for OWASP Threat Dragon is to create a new threat model. Provide the information needed for the new model.
+The more interesting use case for OWASP Threat Dragon is to create a new threat model. After you have clicked on 'New model', provide the information needed for the new one.
 
 *It is possible to add a model, for my test I choose the STRIDE format.*
 
@@ -107,6 +107,8 @@ My threat model is a supply chain attack in an industrial environment. When the 
 
 It will save the model in a 'JSON' format.
 
-Next, to work on the project click on the name of the model . It will open the mode creation page. On the left panel it is 
+Next, to work on the project click on the name of the model. It will open the mode creation page. On the left panel it is 
+
+** IN PROGRESS**
 
 This resource help to create the diagram threat model: https://owasp.org/www-project-threat-dragon/docs-2/diagrams/
