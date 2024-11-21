@@ -109,6 +109,24 @@ It will save the model in a 'JSON' format.
 
 Next, to work on the project click on the name of the model. It will open the mode creation page. On the left panel it is 
 
-**IN PROGRESS**
-
 This resource help to create the diagram threat model: https://owasp.org/www-project-threat-dragon/docs-2/diagrams/
+
+I proposed a json file with an exemple of a simple supply chain attack. It is just an example of what can do this tool. It can cover much more complex threat model, in previous experience people had the hability to cover complex attack scenario on a big system.
+
+Be sure to export the JSON code of the chart before stopping the container. If the code is not extract, you can restart the threat model from zzero.
+
+**FYI**: when you save and stop the Threat Dragon Docker, the next time you come back on your project (you start the container first obviously), the project is not load. Import the project you want to work on, to do that copy the 'JSON' code of the threat model you create earlier and paste it in the form.
+
+### Annex
+
+Threat modeling 
+
+https://learn.microsoft.com/en-us/azure/security/develop/threat-modeling-tool-getting-started
+
+Microsoft provide a Threat model tool name: '[TMT7](https://learn.microsoft.com/en-us/azure/security/develop/threat-modeling-tool)' feel free to test it, I won't cover it
+
+STRIDE approach
+
+https://owasp.org/www-community/Threat_Modeling_Process#stride-threat--mitigation-techniques
+
+https://www.gov.uk/government/publications/secure-connected-places-playbook-documents/conducting-a-stride-based-threat-analysis
