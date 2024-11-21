@@ -106,6 +106,12 @@ https://juice-shop.herokuapp.com/#/
 
 https://github.com/juice-shop/juice-shop
 
+## Picocrypt
+
+This very simple to use encryption tool. You can use it to encrypt files, directory, compress them, add a password and use the popular XChaCha20 cipher.
+
+https://github.com/Picocrypt/Picocrypt
+
 ## Proton
 
 Proton is great for the email and the VPN.
