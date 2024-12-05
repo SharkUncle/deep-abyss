@@ -146,6 +146,12 @@ The most important part in the control page is the **Observation** part, it is a
 
 When all the many controls are done, the audits page automatically update the 'Compliance' and the 'Progress' diagram. Like the RA you can access the 'Action plan' and export the results in ZIP or PDF format.
 
+## Update
+
+Official procedure to update your instance of CISO Assistant.
+
+https://intuitem.gitbook.io/ciso-assistant/deployment/updating-your-local-instance
+
 ### Pros/cons
 
 It's the perfect tool to replace the time-consuming excel file. Like always discuss with the customer about the use of this tool. Secure the computer for local use or the server if it use remotely.
