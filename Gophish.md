@@ -306,6 +306,10 @@ https://hailbytes.com/how-to-setup-gmail-smtp-on-gophish/
 
 *Worked in May 2024*
 
+Evade security controls:
+
+https://www.sprocketsecurity.com/resources/never-had-a-bad-day-phishing-how-to-set-up-gophish-to-evade-security-controls
+
 Use an attachment to deliver a payload.
 
 You can use an Apache2 web server with Gophish and put a malicious file waiting to be downloaded by the email user.
