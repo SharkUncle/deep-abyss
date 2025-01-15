@@ -7,7 +7,7 @@ api_key = "API"
 api = shodan.Shodan(api_key)
 
 try:
-    # nothong fancy here
+    # nothing fancy here
     results = api.search("cups port:631")
     print(f"Results: {results['total']}")
 
