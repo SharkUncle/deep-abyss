@@ -1,5 +1,5 @@
 ---
-- name: Harden Debian Remote Server
+- name: Harden Debian/Ubuntu Remote Server
   hosts: all
   become: yes
   vars:
