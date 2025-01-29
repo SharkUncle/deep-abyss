@@ -1,6 +1,6 @@
 # deep-abyss
 
-My notes on the infosec journey.
+My notes on my journey through the cyberspace.
 
 ## The content:
 
