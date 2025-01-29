@@ -1,0 +1,147 @@
+---
+- name: Harden Debian Remote Server
+  hosts: all
+  become: yes
+  vars:
+    update_system: true
+    configure_ufw: true
+    harden_ssh: true
+    install_fail2ban: true
+    configure_password_policy: true
+    disable_unnecessary_services: false
+    enable_unattended_upgrades: true
+    harden_file_permissions: true
+    enable_auditd: true
+
+    ssh_port: 2222  # Change SSH Port if enabled
+    max_auth_tries: 3
+    password_policy:
+      minlen: 12
+      difok: 4
+      dcredit: -1
+      ucredit: -1
+      lcredit: -1
+      ocredit: -1
+  tasks:
+
+    - name: Update and Upgrade the System
+      apt:
+        update_cache: yes
+        upgrade: dist
+      when: update_system
+
+    - name: Install Essential Security Packages
+      apt:
+        name:
+          - ufw
+          - fail2ban
+          - unattended-upgrades
+          - auditd
+          - libpam-pwquality
+        state: present
+      when: update_system
+
+    - name: Disable Unnecessary Services
+      service:
+        name: "{{ item }}"
+        state: stopped
+        enabled: no
+      loop:
+        - avahi-daemon
+        - cups
+        - xinetd
+        - telnet
+        - vsftpd
+        - apache2  # If web server is not needed
+      when: disable_unnecessary_services
+
+    - name: Set Up UFW Firewall Rules
+      block:
+        - name: Allow SSH
+          ufw:
+            rule: allow
+            port: "{{ ssh_port }}"
+            proto: tcp
+        - name: allow https
+          ufw:
+            rule: allow
+            port: "443"
+            proto: tcp
+        - name: Enable UFW
+          ufw:
+            state: enabled
+            policy: deny
+      when: configure_ufw
+
+    - name: Secure SSH Configuration
+      lineinfile:
+        path: /etc/ssh/sshd_config
+        regexp: "{{ item.regexp }}"
+        line: "{{ item.line }}"
+        state: present
+        backup: yes
+      loop:
+        - { regexp: "^#?Port", line: "Port {{ ssh_port }}" }
+        - { regexp: "^#?PermitRootLogin", line: "PermitRootLogin no" }
+        - { regexp: "^#?PasswordAuthentication", line: "PasswordAuthentication no" }
+        - { regexp: "^#?MaxAuthTries", line: "MaxAuthTries {{ max_auth_tries }}" }
+        - { regexp: "^#?PermitEmptyPasswords", line: "PermitEmptyPasswords no" }
+        - { regexp: "^#?UsePAM", line: "UsePAM yes" }
+      notify: Restart SSH
+      when: harden_ssh
+
+    - name: Ensure Fail2Ban is Enabled
+      service:
+        name: fail2ban
+        state: started
+        enabled: yes
+      when: install_fail2ban
+
+    - name: Enable Unattended Security Updates
+      copy:
+        dest: /etc/apt/apt.conf.d/20auto-upgrades
+        content: |
+          APT::Periodic::Update-Package-Lists "1";
+          APT::Periodic::Unatendedt-Upgrade "1";
+      when: enable_unattended_upgrades
+
+    - name: Configure Password Policy
+      lineinfile:
+        path: /etc/security/pwquality.conf
+        regexp: "^{{ item.key }}="
+        line: "{{ item.key }}={{ item.value }}"
+        state: present
+      loop: 
+        - { key: "minlen", value: "{{ password_policy.minlen }}" }
+        - { key: "difok", value: "{{ password_policy.difok }}" }
+        - { key: "dcredit", value: "{{ password_policy.dcredit }}" }
+        - { key: "ucredit", value: "{{ password_policy.ucredit }}" }
+        - { key: "lcredit", value: "{{ password_policy.lcredit }}" }
+        - { key: "ocredit", value: "{{ password_policy.ocredit }}" }
+      when: configure_password_policy
+
+    - name: Ensure Sensitive File Permissions
+      file:
+        path: "{{ item }}"
+        owner: root
+        group: root
+        mode: '0600'
+      loop:
+        - /etc/shadow
+        - /etc/gshadow
+        - /etc/passwd
+        - /etc/group
+      when: harden_file_permissions
+
+    - name: Enable and Start Auditd
+      service:
+        name: auditd
+        state: started
+        enabled: yes
+      when: enable_auditd
+
+  handlers:
+    - name: Restart SSH
+      service:
+        name: ssh
+        state: restarted
