@@ -4,7 +4,7 @@ Here the documentation for the installation process of OpenCVE.
 
 https://docs.opencve.io/deployment/#configuration
 
-***Disclaimer**: the install.sh is not well done. I run it and got errors. I think this is because they want you to subscribe to the SaaS version of the software, and I'm not an expert.*
+***Disclaimer**: the install.sh is not well done. I run it and got errors. I think this is because they want you to subscribe to the SaaS version of the software just maybe, and I'm not an expert.*
 
 This is just a default installation to test OpenCVE, this is not adapted to a specific organization.
 
