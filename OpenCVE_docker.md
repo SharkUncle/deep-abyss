@@ -59,7 +59,7 @@ The first 2 lines under the `volumes:` part are:
 
 The parts after the `:` is the path in the container, it's not needed to be modify.
 
-Before continuing the installation, the `docker compose up -d` failed every time, that was a first for me with Airflow. It failed everytime during the `set-airflow-connections` step. The script add a connection for the postgres and redis, but the command fail and the script stop. 
+Before continuing the installation, the `./install.sh init-docker-stack` failed every time, that was a first for me with Airflow. It failed everytime during the `set-airflow-connections` step. The script add a connection for the postgres and redis, but the command fail and the script stop. 
 
 When I go in the `airflow-scheduler` container and check the connections with `airflow connections list`, all the connections to postgres and redis are already available.
 
@@ -84,7 +84,7 @@ set-airflow-connections() {
 
 The installation take some times, you can do something useful during some steps, for example when the script import the CVE or the KB.
 
-I run all the installation steps one-by-one, here all the command:
+I run all the installation steps one-by-one, here all the commands:
 - init-docker-stack
 - clone-repositories
 - create-superuser
