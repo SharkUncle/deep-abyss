@@ -8,6 +8,8 @@ OpenCVE is completely open source, it means you can clone the project and use it
 
 **These notes are for the SaaS solution, I will test OpenCVE locally later**
 
+And here it is, the part for the local test: https://github.com/SharkUncle/deep-abyss/blob/master/OpenCVE_docker.md
+
 They offer the opportunity to test the platform:
 
 https://app.opencve.io/cve/
