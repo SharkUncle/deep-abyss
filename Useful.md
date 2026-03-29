@@ -112,6 +112,8 @@ This very simple to use encryption tool. You can use it to encrypt files, direct
 
 https://github.com/Picocrypt/Picocrypt
 
+The project is archived.
+
 ## Proton
 
 Proton is great for the email and the VPN.
