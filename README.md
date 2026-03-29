@@ -10,7 +10,7 @@ My notes on my journey through the cyberspace.
 - [OpenCVE](https://github.com/SharkUncle/deep-abyss/blob/master/opencve.md): is an open-source platform designed to manage vulnerabilities (CVEs)
 - [OWASP Dependency Check](https://github.com/SharkUncle/deep-abyss/blob/master/OWASP_DC/OWASP_DC.md): OWASP Dependency Check tool help to identify Vulnerability dependencies.
 - [OWASP Threat Dragon](https://github.com/SharkUncle/deep-abyss/blob/master/OWASP_TD/threatdragon.md): is the OWASP tool for threat modeling.
-- [Tools](https://github.com/SharkUncle/deep-abyss/blob/master/cyber-link.md): list of online tools helpful
+- [Tools](https://github.com/SharkUncle/deep-abyss/blob/master/cyber-link.md): list of online tools useful 
 - [Useful](https://github.com/SharkUncle/deep-abyss/blob/master/Useful.md): save it and (never) use it.
 - SecNews_feed.opml is the extract of my ttrss (based on [allinfosecnews](https://github.com/foorilla/allinfosecnews_sources) sadly, it closed) with a lot of link, it permit to build a feed on ttrss, miniflux, start.me or whatever can take an opml file.
 
