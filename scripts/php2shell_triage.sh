@@ -65,17 +65,17 @@ while [ $# -gt 0 ]; do
     --no-copy-logs) COPY_LOGS=0; shift;;
     --archive) ARCHIVE=1; shift;;
     -h|--help) usage; exit 0;;
-    *) echo "Option inconnue : $1" >&2; usage; exit 1;;
+    *) echo "Unknown option: $1" >&2; usage; exit 1;;
   esac
 done
 
-[ "$(id -u)" -eq 0 ] || { echo "Ce script doit être exécuté en root (sudo)." >&2; exit 1; }
+[ "$(id -u)" -eq 0 ] || { echo "This script must be run as root (sudo)." >&2; exit 1; }
 
-SINCE_ISO=$(date -d "$SINCE" +%F 2>/dev/null) || { echo "Date invalide : $SINCE" >&2; exit 1; }
+SINCE_ISO=$(date -d "$SINCE" +%F 2>/dev/null) || { echo "Invalid date: $SINCE" >&2; exit 1; }
 TODAY=$(date +%F)
 HOST=$(hostname -s 2>/dev/null || hostname)
 [ -n "$OUT" ] || OUT="./php2shell_triage_${HOST}_$(date -u +%Y%m%dT%H%M%SZ)"
-mkdir -p "$OUT" || { echo "Impossible de créer $OUT" >&2; exit 1; }
+mkdir -p "$OUT" || { echo "Cannot create $OUT" >&2; exit 1; }
 OUT=$(cd "$OUT" && pwd)
 : > "$OUT/FINDINGS.tsv"
 
@@ -140,24 +140,24 @@ WS_RE='(eval|assert|create_function)[[:space:]]*\([[:space:]]*(base64_decode|gzi
 # PHASE 0: preparation
 #==============================================================================
 phase0() {
-  log "== Phase 0 : préparation (fenêtre : depuis $SINCE_ISO) =="
+  log "== Phase 0: preparation (window: since $SINCE_ISO) =="
   local d="$OUT/00_context"; mkdir -p "$d"
 
   {
-    echo "hôte        : $(hostname -f 2>/dev/null || hostname)"
-    echo "date (UTC)  : $(date -u +%FT%TZ)"
-    echo "fuseau      : $(date +%Z) ($(date +%z))"
-    echo "fenêtre     : depuis $SINCE_ISO"
-    echo "noyau       : $(uname -a)"
-    echo "uptime      : $(uptime)"
-    echo "exécuté par : $(id)"
+    echo "host          : $(hostname -f 2>/dev/null || hostname)"
+    echo "date (UTC)    : $(date -u +%FT%TZ)"
+    echo "time zone     : $(date +%Z) ($(date +%z))"
+    echo "window        : since $SINCE_ISO"
+    echo "kernel        : $(uname -a)"
+    echo "uptime        : $(uptime)"
+    echo "run by        : $(id)"
     echo "script SHA256 : $(sha256sum "$0" 2>/dev/null | awk '{print $1}')"
     echo; cat /etc/os-release 2>/dev/null
   } > "$d/contexte.txt"
 
   # Storage warning
   local wfs; wfs=$(df -P "$OUT" | awk 'NR==2{print $1" ("$6")"}')
-  log "Sortie écrite sur : $wfs. Préférez un média externe au disque du serveur suspect."
+  log "Output written to: $wfs. Prefer external media over the suspect server's own disk."
 
   # Accounts running the web workers
   WEBUSERS=$(ps -eo user:32=,comm= 2>/dev/null \
@@ -182,8 +182,8 @@ phase0() {
     done <<< "$cand"
   fi
   printf '%s\n' "${WEBROOTS[@]}" > "$d/racines_web.txt"
-  log "Racines web : ${WEBROOTS[*]:-(aucune détectée, utilisez -w)}"
-  [ "${#WEBROOTS[@]}" -gt 0 ] || finding MED 0 "Aucune racine web détectée : les contrôles sur fichiers seront incomplets (utiliser -w)"
+  log "Web roots: ${WEBROOTS[*]:-(none detected, use -w)}"
+  [ "${#WEBROOTS[@]}" -gt 0 ] || finding MED 0 "No web root detected: file-based checks will be incomplete (use -w)"
 
   # PHP versions and patch status
   local bins b v maj min pat need
@@ -200,14 +200,14 @@ phase0() {
   local sev_expo=EXPO note_bp=""
   if zgrep -sl 'CVE-2026-109618' /usr/share/doc/php*/changelog* >/dev/null 2>&1 \
      || { command -v rpm >/dev/null && rpm -q --changelog $(rpm -qa 'php*' 2>/dev/null) 2>/dev/null | grep -qm1 'CVE-2026-109618'; }; then
-    sev_expo=INFO; note_bp=" [changelog du paquet : CVE-2026-109618 mentionnée, correctif probablement rétroporté : à confirmer]"
-    finding INFO 0 "Le changelog des paquets PHP mentionne CVE-2026-109618 (correctif probablement rétroporté ; vérifier aussi CVE-2026-109619)"
+    sev_expo=INFO; note_bp=" [package changelog mentions CVE-2026-109618, fix probably backported: to be confirmed]"
+    finding INFO 0 "PHP package changelog mentions CVE-2026-109618 (fix probably backported; also check CVE-2026-109619)"
   fi
   : > "$d/php_versions.txt"
   while IFS= read -r b; do
     [ -x "$b" ] || continue
     v=$("$b" -v 2>/dev/null | head -1 | grep -oE '[0-9]+\.[0-9]+\.[0-9]+' | head -1)
-    echo "$b -> ${v:-inconnue}" >> "$d/php_versions.txt"
+    echo "$b -> ${v:-unknown}" >> "$d/php_versions.txt"
     [ -n "$v" ] || continue
     IFS=. read -r maj min pat <<< "$v"; pat=$((10#$pat))
     # First patched release per supported branch (published fixes of 21 Oct 2026)
@@ -216,32 +216,32 @@ phase0() {
     esac
     if [ "$need" -eq 0 ]; then
       if [ "$maj" -lt 8 ] || { [ "$maj" -eq 8 ] && [ "$min" -le 1 ]; }; then
-        finding "$sev_expo" 0 "$b : PHP $v, branche sans correctif officiel (migration requise)$note_bp"
+        finding "$sev_expo" 0 "$b: PHP $v, branch without an official fix (migration required)$note_bp"
       else
-        finding INFO 0 "$b : PHP $v, branche non reconnue par ce script, vérifier le correctif"
+        finding INFO 0 "$b: PHP $v, branch not recognised by this script, check the fix status"
       fi
     elif [ "$pat" -lt "$need" ]; then
-      finding "$sev_expo" 0 "$b : PHP $v < $maj.$min.$need (vulnérable, sauf correctif rétroporté par la distribution)$note_bp"
+      finding "$sev_expo" 0 "$b: PHP $v < $maj.$min.$need (vulnerable, unless the distribution backported the fix)$note_bp"
     else
-      finding INFO 0 "$b : PHP $v >= $maj.$min.$need (correctif présent)"
+      finding INFO 0 "$b: PHP $v >= $maj.$min.$need (fix present)"
     fi
   done <<< "$bins"
 
   # SAPIs in use (mod_php is the most exposed according to public analyses)
   {
-    echo "--- php-fpm / apache / nginx en cours :"; ps -eo pid,user:20,comm | grep -E 'php|apache2|httpd|nginx|lsphp' | grep -v grep | head -50
-    echo "--- modules apache php :"; (apachectl -M 2>/dev/null || apache2ctl -M 2>/dev/null || httpd -M 2>/dev/null) | grep -i php
+    echo "--- running php-fpm / apache / nginx:"; ps -eo pid,user:20,comm | grep -E 'php|apache2|httpd|nginx|lsphp' | grep -v grep | head -50
+    echo "--- apache php modules:"; (apachectl -M 2>/dev/null || apache2ctl -M 2>/dev/null || httpd -M 2>/dev/null) | grep -i php
     ls /etc/apache2/mods-enabled 2>/dev/null | grep -i php
   } > "$d/sapi.txt" 2>&1
   grep -qiE 'php[0-9._]*_module|libphp' "$d/sapi.txt" && \
-    finding INFO 0 "mod_php détecté (SAPI le plus exposé selon les analyses publiques)"
+    finding INFO 0 "mod_php detected (the most exposed SAPI according to public analyses)"
 }
 
 #==============================================================================
 # PHASE 1: volatile data
 #==============================================================================
 phase1() {
-  log "== Phase 1 : éléments volatils =="
+  log "== Phase 1: volatile data =="
   local d="$OUT/01_volatile"; mkdir -p "$d"
 
   { date -u; uptime; who -a; echo; last -Faiw 2>/dev/null | head -300; } > "$d/sessions.txt" 2>&1
@@ -278,17 +278,17 @@ phase1() {
     esac
   done > "$d/proc_exe_suspects.txt"
   [ -s "$d/proc_exe_suspects.txt" ] && \
-    finding HIGH 1 "$(nlines "$d/proc_exe_suspects.txt") processus avec exécutable supprimé / dans /tmp,/dev/shm / memfd (01_volatile/proc_exe_suspects.txt)"
+    finding HIGH 1 "$(nlines "$d/proc_exe_suspects.txt") process(es) with a deleted executable / running from /tmp,/dev/shm / memfd (01_volatile/proc_exe_suspects.txt)"
 
   # PIDs visible in /proc but absent from ps (possible hiding; noisy, info only)
   diff <(ls /proc | grep -E '^[0-9]+$' | sort -n) <(ps -e -o pid= | tr -d ' ' | sort -n) \
     > "$d/pid_proc_vs_ps.txt" 2>&1
 
-  [ -s /etc/ld.so.preload ] && finding HIGH 1 "/etc/ld.so.preload non vide (technique de rootkit userland)"
+  [ -s /etc/ld.so.preload ] && finding HIGH 1 "/etc/ld.so.preload is not empty (userland rootkit technique)"
   awk -F: '$3==0 && $1!="root"{print}' /etc/passwd > "$d/uid0_non_root.txt"
-  [ -s "$d/uid0_non_root.txt" ] && finding HIGH 1 "Compte(s) UID 0 autre que root : $(cat "$d/uid0_non_root.txt" | cut -d: -f1 | tr '\n' ' ')"
+  [ -s "$d/uid0_non_root.txt" ] && finding HIGH 1 "UID 0 account(s) other than root: $(cat "$d/uid0_non_root.txt" | cut -d: -f1 | tr '\n' ' ')"
   local taint; taint=$(cat /proc/sys/kernel/tainted 2>/dev/null)
-  [ "${taint:-0}" != "0" ] && finding INFO 1 "Noyau 'tainted' = $taint (module non signé ou autre ; à interpréter)"
+  [ "${taint:-0}" != "0" ] && finding INFO 1 "Kernel 'tainted' = $taint (unsigned module or other cause; interpret manually)"
 }
 
 #==============================================================================
@@ -317,16 +317,16 @@ discover_logs() {
 }
 
 phase2() {
-  log "== Phase 2 : indicateurs spécifiques PHP2Shell =="
+  log "== Phase 2: PHP2Shell-specific indicators =="
   local d="$OUT/02_indicateurs"; mkdir -p "$d"
   discover_logs
-  log "Logs d'accès : ${#ACCESS[@]} ; logs d'erreur : ${#ERRLOGS[@]}"
+  log "Access logs: ${#ACCESS[@]}; error logs: ${#ERRLOGS[@]}"
   printf '%s\n' "${ALLLOGS[@]}" > "$d/liste_logs.txt"
 
   # Archive the raw logs (primary evidence)
   if [ "$COPY_LOGS" -eq 1 ] && [ "${#ALLLOGS[@]}" -gt 0 ]; then
     printf '%s\0' "${ALLLOGS[@]}" | tar --null -czf "$OUT/raw_logs.tgz" -T - 2>/dev/null
-    log "Logs bruts archivés : raw_logs.tgz"
+    log "Raw logs archived: raw_logs.tgz"
   fi
 
   # Time coverage of the access logs (first and last timestamp of each file)
@@ -336,33 +336,33 @@ phase2() {
     printf '%s\t' "$f" >> "$d/couverture_logs_acces.txt"
     catlog "$f" | awk 'NR==1{a=$4} {b=$4} END{print a" -> "b}' >> "$d/couverture_logs_acces.txt"
   done
-  [ "${#ACCESS[@]}" -eq 0 ] && finding MED 2 "Aucun log d'accès web trouvé (utiliser -l) : volet HTTP non analysé"
+  [ "${#ACCESS[@]}" -eq 0 ] && finding MED 2 "No web access log found (use -l): HTTP analysis skipped"
 
   # Assumes the "combined" log format: $1=IP, $4=time, $6=method, $7=URL, $9=status
   local A="$d/access_depuis_${SINCE_ISO}.log"
   if [ "${#ACCESS[@]}" -gt 0 ]; then
     catlog "${ACCESS[@]}" | grep -E "\[($DRE_WEB):" > "$A"
-    finding INFO 2 "Logs d'accès : $(nlines "$A") lignes depuis $SINCE_ISO (vérifier la couverture : 02_indicateurs/couverture_logs_acces.txt)"
+    finding INFO 2 "Access logs: $(nlines "$A") lines since $SINCE_ISO (check coverage: 02_indicateurs/couverture_logs_acces.txt)"
 
     # a) POST requests ending in 5xx (exploit setup phase; not systematic)
     awk '$6=="\"POST" && $9>=500' "$A" > "$d/http_post_5xx.txt"
-    [ -s "$d/http_post_5xx.txt" ] && finding INFO 2 "$(nlines "$d/http_post_5xx.txt") POST en 5xx (02_indicateurs/http_post_5xx.txt)"
+    [ -s "$d/http_post_5xx.txt" ] && finding INFO 2 "$(nlines "$d/http_post_5xx.txt") POST request(s) ending in 5xx (02_indicateurs/http_post_5xx.txt)"
     awk '$9>=500{print substr($4,2,14)}' "$A" | sort | uniq -c > "$d/http_5xx_par_heure.txt"
     awk '$6=="\"POST" && $9>=500{print $1}' "$A" | sort | uniq -c | sort -rn | head -50 > "$d/http_top_ip_post_5xx.txt"
 
     # b) User-Agents of publicly reported exploitation tools
     grep -iE 'php2shell|php2shell-scan|php2shell-verify|php2shell-poc' "$A" > "$d/http_ua_ioc.txt"
-    [ -s "$d/http_ua_ioc.txt" ] && finding MED 2 "$(nlines "$d/http_ua_ioc.txt") requêtes avec User-Agent d'outil PHP2Shell connu (tentatives ; à corréler avec la phase 3)"
+    [ -s "$d/http_ua_ioc.txt" ] && finding MED 2 "$(nlines "$d/http_ua_ioc.txt") request(s) with a known PHP2Shell tool User-Agent (attempts; correlate with phase 3)"
 
     # c) upload_progress markers in logged URLs / headers
     grep -iE 'PHP_SESSION_UPLOAD_PROGRESS|upload_progress' "$A" > "$d/http_upload_progress.txt"
-    [ -s "$d/http_upload_progress.txt" ] && finding MED 2 "Marqueurs upload_progress dans les logs d'accès (02_indicateurs/http_upload_progress.txt)"
+    [ -s "$d/http_upload_progress.txt" ] && finding MED 2 "upload_progress markers in access logs (02_indicateurs/http_upload_progress.txt)"
 
     # d) PHP files executed from data directories (likely webshell)
     grep -E '/(uploads?|cache|tmp|temp|media|files|images?|assets)/[^ "?]*\.(php[0-9]?|phtml|phar|pht)' "$A" \
       | awk '$9==200' > "$d/http_php_dans_repertoires_donnees_200.txt"
     [ -s "$d/http_php_dans_repertoires_donnees_200.txt" ] && \
-      finding HIGH 2 "$(nlines "$d/http_php_dans_repertoires_donnees_200.txt") requêtes 200 vers des .php situés dans uploads/cache/tmp/media (webshell probable)"
+      finding HIGH 2 "$(nlines "$d/http_php_dans_repertoires_donnees_200.txt") request(s) returning 200 for .php files in uploads/cache/tmp/media (likely webshell)"
 
     # e) Most POSTed PHP URLs (webshells = few URLs, many POSTs)
     awk '$6=="\"POST" && $7 ~ /\.(php|phtml|phar)/{split($7,u,"?"); print u[1]}' "$A" \
@@ -383,7 +383,7 @@ phase2() {
   [ "${#ERRLOGS[@]}" -gt 0 ] && catlog "${ERRLOGS[@]}" \
     | grep -iE 'Allowed memory size|out of memory|exited on signal|SIGSEGV|segfault|zend_mm|illegal session|upload_progress' \
     | grep -E "($DRE_ISO|$DRE_SYS|$DRE_WEB)" | head -5000 > "$d/php_erreurs_lignes_depuis_since.txt"
-  [ -s "$d/php_erreurs.txt" ] && finding INFO 2 "Erreurs mémoire / crashs PHP dans les logs d'erreur (02_indicateurs/php_erreurs.txt) : signal de tentative, pas de preuve de succès"
+  [ -s "$d/php_erreurs.txt" ] && finding INFO 2 "Memory errors / PHP crashes in error logs (02_indicateurs/php_erreurs.txt): sign of an attempt, not proof of success"
 
   # System journal and kernel messages
   if command -v journalctl >/dev/null; then
@@ -393,7 +393,7 @@ phase2() {
   fi
   dmesg -T 2>/dev/null | grep -iE 'segfault|out of memory|oom-kill' > "$d/dmesg_segfault_oom.txt"
   local nseg; nseg=$(cat "$d/journal_workers.txt" "$d/journal_noyau.txt" "$d/dmesg_segfault_oom.txt" 2>/dev/null | wc -l | tr -d ' ')
-  [ "${nseg:-0}" -gt 0 ] && finding MED 2 "$nseg lignes de crash/segfault/OOM (workers web ou noyau) depuis $SINCE_ISO"
+  [ "${nseg:-0}" -gt 0 ] && finding MED 2 "$nseg crash/segfault/OOM line(s) (web workers or kernel) since $SINCE_ISO"
 
   # --- Most reliable signal: abnormal child processes of PHP/web workers.
   # Build a pid -> parent map from ps and flag shells, downloaders and
@@ -408,7 +408,7 @@ phase2() {
     while read -r pid ppid usr par com; do
       echo "$pid $usr parent=$par($ppid) :: $(tr '\0' ' ' < /proc/$pid/cmdline 2>/dev/null)"
     done < "$d/enfants_suspects_instantane.txt" > "$d/enfants_suspects_detail.txt"
-    finding HIGH 2 "Processus enfant suspect d'un worker web en cours d'exécution (02_indicateurs/enfants_suspects_detail.txt)"
+    finding HIGH 2 "Suspicious child process of a running web worker (02_indicateurs/enfants_suspects_detail.txt)"
   fi
 
   # All processes of the web accounts that are not web workers (manual review)
@@ -427,9 +427,9 @@ phase2() {
     grep -E 'exe=/(usr/)?(s?bin|local/bin)/(sh|bash|dash|curl|wget|nc|ncat|socat|python[0-9.]*|perl|ruby)' \
       "$d/auditd_execve_comptes_web.txt" > "$d/auditd_execve_suspects.txt"
     [ -s "$d/auditd_execve_suspects.txt" ] && \
-      finding HIGH 2 "auditd : execve de shell/téléchargeur par un compte web depuis $SINCE_ISO (02_indicateurs/auditd_execve_suspects.txt)"
+      finding HIGH 2 "auditd: execve of a shell/downloader by a web account since $SINCE_ISO (02_indicateurs/auditd_execve_suspects.txt)"
   else
-    finding INFO 2 "auditd absent : pas d'historique d'exécution de processus (utiliser l'EDR si présent, ex. parents php-fpm/apache2)"
+    finding INFO 2 "auditd not available: no process execution history (use the EDR if present, e.g. php-fpm/apache2 parents)"
   fi
 }
 
@@ -437,7 +437,7 @@ phase2() {
 # PHASE 3: persistence and post-exploitation
 #==============================================================================
 phase3() {
-  log "== Phase 3 : persistance et post-exploitation =="
+  log "== Phase 3: persistence and post-exploitation =="
   local d="$OUT/03_persistance"; mkdir -p "$d"
   local u
 
@@ -447,13 +447,13 @@ phase3() {
       -printf '%TY-%Tm-%Td %TH:%TM:%TS\t%u:%g\t%m\t%s\t%p\n' 2>/dev/null | sort > "$d/web_fichiers_modifies.txt"
     find_php_files -newermt "$SINCE_ISO" \
       -printf '%TY-%Tm-%Td %TH:%TM:%TS\t%u:%g\t%m\t%s\t%p\n' 2>/dev/null | sort > "$d/web_php_modifies.txt"
-    finding INFO 3 "$(nlines "$d/web_php_modifies.txt") fichiers PHP modifiés depuis $SINCE_ISO (déploiements légitimes à écarter)"
+    finding INFO 3 "$(nlines "$d/web_php_modifies.txt") PHP file(s) modified since $SINCE_ISO (rule out legitimate deployments)"
 
     # PHP files in data directories (almost never legitimate)
     find_php_files \( -path '*upload*' -o -path '*/cache/*' -o -path '*/tmp/*' -o -path '*/media/*' -o -path '*/files/*' \) \
       -printf '%TY-%Tm-%Td %TH:%TM\t%u:%g\t%m\t%p\n' 2>/dev/null | sort > "$d/web_php_dans_repertoires_donnees.txt"
     [ -s "$d/web_php_dans_repertoires_donnees.txt" ] && \
-      finding MED 3 "$(nlines "$d/web_php_dans_repertoires_donnees.txt") fichiers PHP dans des répertoires de données (uploads/cache/tmp/media/files)"
+      finding MED 3 "$(nlines "$d/web_php_dans_repertoires_donnees.txt") PHP file(s) in data directories (uploads/cache/tmp/media/files)"
 
     # Webshell pattern search (recent files only, or everything with --deep)
     if [ "$DEEP" -eq 1 ]; then
@@ -463,7 +463,7 @@ phase3() {
     fi
     if [ -s "$d/webshell_motifs.txt" ]; then
       xargs -a "$d/webshell_motifs.txt" -d '\n' -r sha256sum > "$d/webshell_motifs_sha256.txt" 2>/dev/null
-      finding HIGH 3 "$(nlines "$d/webshell_motifs.txt") fichiers PHP avec motif de webshell (03_persistance/webshell_motifs.txt ; à valider manuellement)"
+      finding HIGH 3 "$(nlines "$d/webshell_motifs.txt") PHP file(s) matching a webshell pattern (03_persistance/webshell_motifs.txt; validate manually)"
     fi
 
     # PHP configuration overrides (persistence through auto_prepend_file, etc.);
@@ -474,10 +474,10 @@ phase3() {
     find "${WEBROOTS[@]}" -xdev \( -name '.user.ini' -o -name '.htaccess' -o -name 'php.ini' \) -newermt "$SINCE_ISO" \
       -printf '%TY-%Tm-%Td %TH:%TM\t%u\t%p\n' 2>/dev/null > "$d/php_ini_htaccess_modifies.txt"
     [ -s "$d/php_ini_htaccess_modifies.txt" ] && \
-      finding MED 3 "$(nlines "$d/php_ini_htaccess_modifies.txt") .user.ini/.htaccess/php.ini modifiés depuis $SINCE_ISO"
+      finding MED 3 "$(nlines "$d/php_ini_htaccess_modifies.txt") .user.ini/.htaccess/php.ini file(s) modified since $SINCE_ISO"
     grep -E 'auto_(prepend|append)_file' "$d/php_surcharges_config.txt" | grep -E '\.user\.ini|\.htaccess' > "$d/php_prepend_dans_surcharges_locales.txt"
     [ -s "$d/php_prepend_dans_surcharges_locales.txt" ] && \
-      finding HIGH 3 "auto_prepend_file/auto_append_file dans .user.ini ou .htaccess (03_persistance/php_prepend_dans_surcharges_locales.txt)"
+      finding HIGH 3 "auto_prepend_file/auto_append_file set in .user.ini or .htaccess (03_persistance/php_prepend_dans_surcharges_locales.txt)"
   fi
 
   # Recent temporary files; flag ELF binaries and scripts by their file type
@@ -485,7 +485,7 @@ phase3() {
   if command -v file >/dev/null && [ -s "$d/tmp_recents.txt" ]; then
     awk '{print $NF}' "$d/tmp_recents.txt" | xargs -r -d '\n' file 2>/dev/null | awk -F': ' '{t=$NF} t ~ /ELF|script|PHP/' > "$d/tmp_executables_ou_scripts.txt"
     [ -s "$d/tmp_executables_ou_scripts.txt" ] && \
-      finding HIGH 3 "Binaires ELF ou scripts récents dans /tmp, /var/tmp, /dev/shm (03_persistance/tmp_executables_ou_scripts.txt)"
+      finding HIGH 3 "Recent ELF binaries or scripts in /tmp, /var/tmp, /dev/shm (03_persistance/tmp_executables_ou_scripts.txt)"
   fi
 
   # Files owned by web accounts outside the web roots and expected locations
@@ -499,21 +499,21 @@ phase3() {
       -printf '%TY-%Tm-%Td %TH:%TM\t%u\t%m\t%p\n' 2>/dev/null >> "$d/fichiers_comptes_web_hors_webroot.txt"
   done
   [ -s "$d/fichiers_comptes_web_hors_webroot.txt" ] && \
-    finding MED 3 "$(nlines "$d/fichiers_comptes_web_hors_webroot.txt") fichiers récents appartenant à un compte web hors racines web"
+    finding MED 3 "$(nlines "$d/fichiers_comptes_web_hors_webroot.txt") recent file(s) owned by a web account outside the web roots"
 
   # Recent SUID / SGID binaries
   find / -xdev \( -perm -4000 -o -perm -2000 \) -type f -newermt "$SINCE_ISO" \
     -printf '%TY-%Tm-%Td %TH:%TM\t%u\t%m\t%p\n' 2>/dev/null > "$d/suid_sgid_recents.txt"
-  [ -s "$d/suid_sgid_recents.txt" ] && finding HIGH 3 "Binaires SUID/SGID créés ou modifiés depuis $SINCE_ISO (03_persistance/suid_sgid_recents.txt)"
+  [ -s "$d/suid_sgid_recents.txt" ] && finding HIGH 3 "SUID/SGID binaries created or modified since $SINCE_ISO (03_persistance/suid_sgid_recents.txt)"
 
   # Persistence: cron, systemd, SSH, sudoers, /etc
   find /etc/cron* /var/spool/cron /etc/systemd /usr/lib/systemd /lib/systemd /etc/init.d /etc/rc.local /etc/profile.d \
     -type f -newermt "$SINCE_ISO" -printf '%TY-%Tm-%Td %TH:%TM\t%u\t%p\n' 2>/dev/null > "$d/persistance_cron_systemd_recents.txt"
   [ -s "$d/persistance_cron_systemd_recents.txt" ] && \
-    finding MED 3 "$(nlines "$d/persistance_cron_systemd_recents.txt") fichiers cron/systemd/init modifiés depuis $SINCE_ISO"
+    finding MED 3 "$(nlines "$d/persistance_cron_systemd_recents.txt") cron/systemd/init file(s) modified since $SINCE_ISO"
   find /root/.ssh /home/*/.ssh /var/www/.ssh -type f -newermt "$SINCE_ISO" \
     -printf '%TY-%Tm-%Td %TH:%TM\t%u\t%p\n' 2>/dev/null > "$d/ssh_recents.txt"
-  [ -s "$d/ssh_recents.txt" ] && finding HIGH 3 "Fichiers .ssh modifiés depuis $SINCE_ISO (clés autorisées ajoutées ?) (03_persistance/ssh_recents.txt)"
+  [ -s "$d/ssh_recents.txt" ] && finding HIGH 3 ".ssh files modified since $SINCE_ISO (authorized keys added?) (03_persistance/ssh_recents.txt)"
   find /etc -xdev -type f -newermt "$SINCE_ISO" -printf '%TY-%Tm-%Td %TH:%TM\t%u\t%p\n' 2>/dev/null > "$d/etc_recents.txt"
   for f in /etc/passwd /etc/shadow /etc/group /etc/sudoers /etc/sudoers.d/*; do
     [ -e "$f" ] && stat -c '%y %n' "$f"
@@ -531,7 +531,7 @@ phase3() {
       grep -E '^..5' "$d/pkg_verify.txt" | grep -E ' /(usr/)?(s?bin|lib|lib64)/' | grep -vE ' c /' > "$d/pkg_verify_binaires_modifies.txt"
     fi
     [ -s "$d/pkg_verify_binaires_modifies.txt" ] && \
-      finding MED 3 "$(nlines "$d/pkg_verify_binaires_modifies.txt") binaires système dont le hash diffère du paquet (03_persistance/pkg_verify_binaires_modifies.txt)"
+      finding MED 3 "$(nlines "$d/pkg_verify_binaires_modifies.txt") system binary(ies) whose hash differs from the package (03_persistance/pkg_verify_binaires_modifies.txt)"
   fi
 }
 
@@ -539,7 +539,7 @@ phase3() {
 # PHASE 4: lateral movement / exfiltration
 #==============================================================================
 phase4() {
-  log "== Phase 4 : mouvements latéraux et exfiltration =="
+  log "== Phase 4: lateral movement and exfiltration =="
   local d="$OUT/04_lateral"; mkdir -p "$d"
 
   # Established connections whose local port is not a listening port
@@ -550,10 +550,10 @@ phase4() {
     | awk -v lp="^(${lp})$" '{n=split($3,a,":"); if (a[n] !~ lp) print}' > "$d/connexions_sortantes.txt"
   grep -E '"(sh|bash|dash|zsh|nc|ncat|netcat|socat|python[0-9.]*|perl|ruby|curl|wget)"' "$d/connexions_sortantes.txt" > "$d/connexions_sortantes_shells.txt"
   [ -s "$d/connexions_sortantes_shells.txt" ] && \
-    finding HIGH 4 "Connexion sortante établie par un shell/interpréteur (reverse shell possible) (04_lateral/connexions_sortantes_shells.txt)"
+    finding HIGH 4 "Outbound connection established by a shell/interpreter (possible reverse shell) (04_lateral/connexions_sortantes_shells.txt)"
   grep -E '"(php[^"]*|apache2|httpd|nginx|lsphp)"' "$d/connexions_sortantes.txt" > "$d/connexions_sortantes_workers_web.txt"
   [ -s "$d/connexions_sortantes_workers_web.txt" ] && \
-    finding MED 4 "Connexions sortantes établies depuis des workers web (à comparer à la ligne de base : API, BDD, SMTP légitimes) (04_lateral/connexions_sortantes_workers_web.txt)"
+    finding MED 4 "Outbound connections established from web workers (compare with the baseline: legitimate APIs, databases, SMTP) (04_lateral/connexions_sortantes_workers_web.txt)"
 
   # Authentications since --since (auth.log / secure, plus journald for sshd)
   : > "$d/auth_depuis_since.txt"
@@ -567,7 +567,7 @@ phase4() {
   grep -h 'Accepted' "$d/auth_depuis_since.txt" | awk '{for(i=1;i<=NF;i++) if($i=="from") print $(i+1)}' \
     | sort | uniq -c | sort -rn > "$d/ssh_accepted_par_ip.txt"
   grep -hE 'useradd|usermod|groupadd|new user' "$d/auth_depuis_since.txt" > "$d/creation_comptes.txt"
-  [ -s "$d/creation_comptes.txt" ] && finding MED 4 "Création/modification de comptes depuis $SINCE_ISO (04_lateral/creation_comptes.txt)"
+  [ -s "$d/creation_comptes.txt" ] && finding MED 4 "Account creation/modification since $SINCE_ISO (04_lateral/creation_comptes.txt)"
 
   # Secret files readable by the PHP process (contents are NOT collected)
   if [ "${#WEBROOTS[@]}" -gt 0 ]; then
@@ -576,7 +576,7 @@ phase4() {
          -o -name config.inc.php -o -name parameters.yml -o -name env.php -o -name database.php \) \
       -printf '%u:%g\t%m\t%TY-%Tm-%Td\t%p\n' 2>/dev/null > "$d/fichiers_secrets_liste.txt"
     [ -s "$d/fichiers_secrets_liste.txt" ] && \
-      finding INFO 4 "$(nlines "$d/fichiers_secrets_liste.txt") fichiers de configuration contenant des secrets lisibles par PHP (contenu non collecté) : à faire tourner si exposition avérée, la fuite mémoire PHP2Shell ne laisse pas de webshell"
+      finding INFO 4 "$(nlines "$d/fichiers_secrets_liste.txt") configuration file(s) holding secrets readable by PHP (contents not collected): rotate them if exposure is confirmed, since the PHP2Shell memory leak leaves no webshell"
   fi
 }
 
@@ -584,27 +584,27 @@ phase4() {
 # PHASE 5: timeline
 #==============================================================================
 phase5() {
-  log "== Phase 5 : timeline =="
+  log "== Phase 5: timeline =="
   local d="$OUT/05_timeline"; mkdir -p "$d"
   # File-based timeline (mtime and ctime) over the usual attacker locations
   local roots=( /etc /tmp /var/tmp /dev/shm /root /home /opt /usr/local /usr/bin /usr/sbin /var/spool/cron "${WEBROOTS[@]}" )
   local existing=() r
   for r in "${roots[@]}"; do [ -e "$r" ] && existing+=("$r"); done
-  { printf 'mtime\tctime\tutilisateur\tgroupe\tmode\ttaille\tchemin\n'
+  { printf 'mtime\tctime\tuser\tgroup\tmode\tsize\tpath\n'
     find "${existing[@]}" -xdev -type f \( -newermt "$SINCE_ISO" -o -newerct "$SINCE_ISO" \) \
       -printf '%T+\t%C+\t%u\t%g\t%m\t%s\t%p\n' 2>/dev/null | sort
   } > "$d/timeline_fichiers.tsv"
   [ -s "$OUT/02_indicateurs/evenements_http_suspects.txt" ] && \
     cp "$OUT/02_indicateurs/evenements_http_suspects.txt" "$d/evenements_http_suspects.txt"
-  log "Timeline : $(nlines "$d/timeline_fichiers.tsv") fichiers (à croiser avec les événements HTTP et les logs d'erreur)."
-  log "Pour une timeline complète depuis une image disque : fls -r -m / | mactime, ou Plaso (log2timeline.py)."
+  log "Timeline: $(nlines "$d/timeline_fichiers.tsv") files (cross-check with HTTP events and error logs)."
+  log "For a full timeline from a disk image: fls -r -m / | mactime, or Plaso (log2timeline.py)."
 }
 
 #==============================================================================
 # PHASE 6: summary
 #==============================================================================
 phase6() {
-  log "== Phase 6 : synthèse =="
+  log "== Phase 6: summary =="
   local R="$OUT/RAPPORT.txt" h m e i
   # Count findings per severity
   h=$(awk -F'\t' '$1=="HIGH"' "$OUT/FINDINGS.tsv" | wc -l | tr -d ' ')
@@ -612,63 +612,63 @@ phase6() {
   e=$(awk -F'\t' '$1=="EXPO"' "$OUT/FINDINGS.tsv" | wc -l | tr -d ' ')
   i=$(awk -F'\t' '$1=="INFO"' "$OUT/FINDINGS.tsv" | wc -l | tr -d ' ')
   {
-    echo "RAPPORT DE TRIAGE PHP2SHELL (CVE-2026-109618 / CVE-2026-109619)"
-    echo "Hôte : $HOST   Généré (UTC) : $(date -u +%FT%TZ)   Fenêtre : depuis $SINCE_ISO"
+    echo "PHP2SHELL TRIAGE REPORT (CVE-2026-109618 / CVE-2026-109619)"
+    echo "Host: $HOST   Generated (UTC): $(date -u +%FT%TZ)   Window: since $SINCE_ISO"
     echo
-    echo "Constats : HIGH=$h  MED=$m  EXPO=$e  INFO=$i"
+    echo "Findings: HIGH=$h  MED=$m  EXPO=$e  INFO=$i"
     echo
     # Heuristic verdict: driven by the highest severity found
     if [ "$h" -gt 0 ]; then
-      echo "VERDICT : INDICATEURS FORTS DE COMPROMISSION."
-      echo "  Isoler le serveur au niveau réseau (sans l'éteindre), conserver RAM et disque,"
-      echo "  ne pas nettoyer en place, reconstruire depuis une image saine, faire tourner"
-      echo "  tous les secrets lisibles par PHP et rechercher les mêmes indicateurs ailleurs."
+      echo "VERDICT: STRONG INDICATORS OF COMPROMISE."
+      echo "  Isolate the server at network level (without powering it off), preserve RAM and disk,"
+      echo "  do not clean in place, rebuild from a clean image, rotate all secrets readable by PHP"
+      echo "  and hunt for the same indicators elsewhere."
     elif [ "$m" -gt 0 ]; then
-      echo "VERDICT : ÉLÉMENTS À INVESTIGUER (pas de preuve directe de compromission)."
-      echo "  Corréler les constats MED entre eux et avec la timeline (05_timeline)."
+      echo "VERDICT: ITEMS TO INVESTIGATE (no direct proof of compromise)."
+      echo "  Correlate the MED findings with each other and with the timeline (05_timeline)."
     else
-      echo "VERDICT : AUCUN INDICATEUR TROUVÉ PAR CE TRIAGE."
-      echo "  Cela ne prouve pas l'absence de compromission (voir limites ci-dessous)."
+      echo "VERDICT: NO INDICATOR FOUND BY THIS TRIAGE."
+      echo "  This does not prove the absence of compromise (see limitations below)."
     fi
-    [ "$e" -gt 0 ] && echo "  Exposition : une version PHP vulnérable est présente. Mettre à jour, puis conserver l'analyse."
+    [ "$e" -gt 0 ] && echo "  Exposure: a vulnerable PHP version is present. Update it, then keep the analysis results."
     echo
-    echo "--- Constats (sévérité / phase / message) ---"
-    sort -t$'\t' -k1,1 "$OUT/FINDINGS.tsv" | awk -F'\t' '{printf "[%s] phase %s : %s\n",$1,$2,$3}'
+    echo "--- Findings (severity / phase / message) ---"
+    sort -t$'\t' -k1,1 "$OUT/FINDINGS.tsv" | awk -F'\t' '{printf "[%s] phase %s: %s\n",$1,$2,$3}'
     echo
-    echo "--- Limites ---"
-    echo " * Une exploitation réussie peut renvoyer un HTTP 200 normal et ne rien laisser dans les logs applicatifs."
-    echo " * Les logs web standard ne contiennent pas le corps des requêtes multipart."
-    echo " * La fuite de mémoire d'un worker PHP (secrets, sessions) ne laisse aucune trace fichier :"
-    echo "   si le serveur est resté exposé et non patché, la rotation des secrets se justifie sans indicateur."
-    echo " * Un webshell planté avant le correctif survit à la mise à jour de PHP."
-    echo " * La couverture des logs doit remonter à la fenêtre analysée : 02_indicateurs/couverture_logs_acces.txt."
-    echo " * Si un rootkit est possible, les commandes de ce script peuvent être faussées : analyser une image disque hors ligne."
-    echo " * Les motifs de webshell sont stricts : l'absence de résultat ne vaut pas absence de webshell. Utiliser --deep et YARA."
-    echo " * Les constats MED/INFO sont bruités (déploiements, tâches légitimes) : valider un par un."
+    echo "--- Limitations ---"
+    echo " * A successful exploitation can return a normal HTTP 200 and leave nothing in application logs."
+    echo " * Standard web logs do not contain the body of multipart requests."
+    echo " * A PHP worker memory leak (secrets, sessions) leaves no file trace:"
+    echo "   if the server stayed exposed and unpatched, rotating secrets is justified even without an indicator."
+    echo " * A webshell planted before the fix survives the PHP update."
+    echo " * Log coverage must reach back to the analysed window: 02_indicateurs/couverture_logs_acces.txt."
+    echo " * If a rootkit is possible, the commands used by this script may be tampered with: analyse an offline disk image."
+    echo " * Webshell patterns are strict: no result does not mean no webshell. Use --deep and YARA."
+    echo " * MED/INFO findings are noisy (deployments, legitimate tasks): validate them one by one."
     echo
-    echo "--- Contenu ---"
+    echo "--- Contents ---"
     (cd "$OUT" && ls -1)
   } > "$R"
 
   # Integrity manifest (last write into the directory, so log before building it)
-  log "Manifeste SHA-256 : $OUT/SHA256SUMS"
+  log "SHA-256 manifest: $OUT/SHA256SUMS"
   (cd "$OUT" && find . -type f ! -name SHA256SUMS -print0 | xargs -0 sha256sum > SHA256SUMS) 2>/dev/null
 
   if [ "$ARCHIVE" -eq 1 ]; then
     tar -czf "$OUT.tgz" -C "$(dirname "$OUT")" "$(basename "$OUT")" && sha256sum "$OUT.tgz" > "$OUT.tgz.sha256"
-    log "Archive : $OUT.tgz"
+    log "Archive: $OUT.tgz"
   fi
 
   # Print the report header (verdict and counters) on the terminal
   echo >&2
-  sed -n '1,/^--- Constats/p' "$R" | head -n -1 >&2
-  echo "Rapport complet : $R" >&2
+  sed -n '1,/^--- Findings/p' "$R" | head -n -1 >&2
+  echo "Full report: $R" >&2
 }
 
 #------------------------------------------------------------------------------
 # Main
 #------------------------------------------------------------------------------
-log "Démarrage : hôte=$HOST, fenêtre=$SINCE_ISO, sortie=$OUT"
+log "Starting: host=$HOST, window=$SINCE_ISO, output=$OUT"
 phase0
 phase1
 phase2
