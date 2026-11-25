@@ -2,6 +2,9 @@
 
 My notes on my journey through the cyberspace.
 
+I am not an expert, you can check all the informations and give me feedback.
+Yes, I try to use more and more virtualize environment. Also I use AI, I'm not a fan but if I don't want to be let on the side of the road.
+
 ## The content:
 
 - Just another [Cheat sheet](https://github.com/SharkUncle/deep-abyss/blob/master/Cheat_sheet.md) for CTF.
