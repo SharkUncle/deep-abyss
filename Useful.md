@@ -76,6 +76,12 @@ Just add: `https://htmlpreview.github.io/?` to any URL of HTML file.
 
 https://github.com/htmlpreview/htmlpreview.github.com?tab=readme-ov-file
 
+## kitploit
+
+A useful web site qith a lot of tools. 
+
+https://kitploit.com/fr
+
 ## Metasploit Unleashed
 
 The Free Online Course and probably the best for learning Metasploit Framework alias MSF.
