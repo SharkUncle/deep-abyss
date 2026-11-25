@@ -78,7 +78,7 @@ https://github.com/htmlpreview/htmlpreview.github.com?tab=readme-ov-file
 
 ## kitploit
 
-A useful web site qith a lot of tools. 
+A useful web site site with a lot of tools. 
 
 https://kitploit.com/fr
 
