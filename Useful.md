@@ -2,6 +2,17 @@
 
 This is a list of resources that can make the life easier.
 
+## Autonomous penetration testing with AI
+
+Autonomous system with AI agent for offensive.
+
+It is use actively in some campaign, and it's easily installed.
+Worth a try in a lab environment or identify some vulenrabilities in a project.
+
+https://github.com/BaaRai/ARTEX
+
+https://github.com/vxcontrol/pentagi
+
 ## Arsenal
 
 Useful for CTF, quick search a command for a specific tool and customise the option.
