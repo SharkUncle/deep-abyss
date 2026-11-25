@@ -56,6 +56,8 @@ A very useful and powerful setup.
 
 The official documentation is very simple to follow for the installation process.
 
+They change the model, and now you can use the community edition for CTF. 
+
 https://github.com/ThePorgs/Exegol
 
 https://exegol.readthedocs.io/en/latest/
@@ -91,6 +93,12 @@ It present all the content of Metasploit, this framework is owned by Rapid7.
 Metasploit is a great resource, it help with security audits, penetration tests, enumeration, offensive and defensive, and many things.
 
 https://www.offsec.com/metasploit-unleashed/
+
+## Offensive docker
+
+Another Docker with a lot ressources for CTF.
+
+https://github.com/aaaguirrep/offensive-docker/tree/master
 
 ## osint4all
 
