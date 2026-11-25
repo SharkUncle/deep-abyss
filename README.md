@@ -3,7 +3,7 @@
 My notes on my journey through the cyberspace.
 
 I am not an expert, you can check all the informations and give me feedback.
-Yes, I'm trying to use virtualized environments more and more. I also use AI; I'm not a big fan, but I don't want to get left behind.
+Yes, I'm trying to use virtualized environments more and more. I also use AI for learning; I'm not a big fan, but I don't want to get left behind.
 
 ## The content:
 
